@@ -70,4 +70,17 @@ public class ImageViewerWindowController
             imageView.setImage(images.get(currentImageIndex));
         }
     }
+
+    public void handleBtnSlideshowAction(ActionEvent actionEvent) {
+        Thread t = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    Thread.sleep(1000);
+                    //write code here to set image to jLabel
+                }catch(Exception e){
+                }
+            }
+        });
+        t.start();
+    }
 }
