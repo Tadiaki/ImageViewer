@@ -1,8 +1,12 @@
-package dk.easv;
+package dk.easv.ui;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import dk.easv.logic.Slideshow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -72,6 +76,12 @@ public class ImageViewerWindowController
     }
 
     public void handleBtnSlideshowAction(ActionEvent actionEvent) {
+
+        Slideshow ss = new Slideshow();
+
+        ExecutorService es = Executors.newCachedThreadPool();
+        es.execute(ss);
+
         Thread t = new Thread(new Runnable(){
             public void run(){
                 try{
