@@ -26,6 +26,7 @@ public class ImageViewerWindowController
 
     @FXML
     private ImageView imageView;
+    private Object Image;
 
     @FXML
     private void handleBtnLoadAction()
@@ -76,13 +77,12 @@ public class ImageViewerWindowController
     }
 
     public void handleBtnSlideshowAction(ActionEvent actionEvent) {
-
         Slideshow ss = new Slideshow();
 
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(ss);
 
-        Thread t = new Thread(new Runnable(){
+        /**Thread t = new Thread(new Runnable(){
             public void run(){
                 try{
                     Thread.sleep(1000);
@@ -91,6 +91,7 @@ public class ImageViewerWindowController
                 }
             }
         });
-        t.start();
+        t.start();*/
     }
+
 }
