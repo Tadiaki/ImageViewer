@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,10 @@ public class ImageViewerWindowController implements Initializable
 {
     private final List<Image> images = new ArrayList<>();
     public Slider sliderSpeed;
+    public Label lblImageTitle;
+    public Label lblRed;
+    public Label lblGreen;
+    public Label lblBlue;
     private int currentImageIndex = 0;
     private int speed;
 
@@ -85,6 +90,7 @@ public class ImageViewerWindowController implements Initializable
         if (!images.isEmpty())
         {
             imageView.setImage(images.get(currentImageIndex));
+            lblImageTitle.setText(images.get(currentImageIndex).getUrl());
         }
     }
 
@@ -92,6 +98,14 @@ public class ImageViewerWindowController implements Initializable
         ss = new Slideshow(images, (int) sliderSpeed.getValue());
         ss.valueProperty().addListener((observable, oldValue, newValue) -> {
             imageView.setImage(newValue);
+        });
+        ss.messageProperty().addListener((observable, oldValue, newValue) -> {
+            lblImageTitle.setText(newValue);
+        });
+        ss.titleProperty().addListener((observable, oldValue, newValue) -> {
+            lblRed.setText(newValue);
+            lblGreen.setText(newValue);
+            lblBlue.setText(newValue);
         });
 
         ExecutorService es = Executors.newCachedThreadPool();
