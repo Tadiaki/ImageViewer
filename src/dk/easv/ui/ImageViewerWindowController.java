@@ -1,32 +1,44 @@
 package dk.easv.ui;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import dk.easv.logic.Slideshow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-public class ImageViewerWindowController
+public class ImageViewerWindowController implements Initializable
 {
     private final List<Image> images = new ArrayList<>();
+    public Slider sliderSpeed;
     private int currentImageIndex = 0;
+    private int speed;
+
+    private Slideshow ss;
 
     @FXML
     Parent root;
 
     @FXML
     private ImageView imageView;
-    private Object Image;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
     @FXML
     private void handleBtnLoadAction()
@@ -77,21 +89,17 @@ public class ImageViewerWindowController
     }
 
     public void handleBtnSlideshowAction(ActionEvent actionEvent) {
-        Slideshow ss = new Slideshow();
+        ss = new Slideshow(images, (int) sliderSpeed.getValue());
+        ss.valueProperty().addListener((observable, oldValue, newValue) -> {
+            imageView.setImage(newValue);
+        });
 
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(ss);
+    }
 
-        /**Thread t = new Thread(new Runnable(){
-            public void run(){
-                try{
-                    Thread.sleep(1000);
-                    //write code here to set image to jLabel
-                }catch(Exception e){
-                }
-            }
-        });
-        t.start();*/
+    public void handleBtnSlideshowStopAction(ActionEvent actionEvent) {
+        ss.makeIsSlideShowRunningFalse();
     }
 
 }
